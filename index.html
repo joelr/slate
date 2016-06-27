@@ -13,7 +13,7 @@
 
       <script>
         $(function() {
-          setupLanguages(["shell","ruby","python"]);
+          setupLanguages(["shell"]);
         });
       </script>
   </head>
@@ -26,11 +26,9 @@
       </span>
     </a>
     <div class="tocify-wrapper">
-      <img src="images/logo.png" />
+      <img height="32px" padding="5px" src="https://d3rww24eqvaraj.cloudfront.net/assets/jc-18233eaad3ee0c9c65bf2b611a455114.png" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -39,61 +37,535 @@
       <div id="toc">
       </div>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
-            <li><a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
+            <li><a href='https://app.justcharity.org/pricing'>Sign Up for an account</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+<p>Welcome to the JustCharity API. You can use our API to access JustCharity API endpoints, which can get information on various events, charities, and analytics within the platform.</p>
 
-<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
-
-<p>This example API documentation page was created with <a href="http://github.com/tripit/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&rsquo;s documentation.</p>
+<p>Some endpoints are authenticated with an API key, public API endpoints and authenticated endpoints are both documented here.</p>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
 <p>To authorize, use this code:</p>
 </blockquote>
-<pre class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</pre>
-<pre class="highlight python"><span class="kn">import</span> <span class="s">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">Kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</pre>
-<pre class="highlight shell"><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<pre class="highlight shell"><span class="c"># With shell, you can just pass the correct get param with each request</span>
+curl <span class="s2">"https://app.justcharity.org/api/v1/charities/cancer-research-uk/widgets/page.json?api_key=&lt;KEY&gt;"</span>
 </pre>
 
 <blockquote>
-<p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key.</p>
+<p>Make sure to replace <code class="prettyprint">&lt;KEY&gt;</code> with your API key.</p>
 </blockquote>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<p>You can register a new JustCharity API key at <a href="https://app.justcharity.org/pricing">JustCharity</a>.</p>
 
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code class="prettyprint">Authorization: meowmeowmeow</code></p>
-
-<p><aside class="notice">
-You must replace <code class="prettyprint">meowmeowmeow</code> with your personal API key.
-</aside></p>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h1><pre class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
+<p>Once you have created an account, you can find the API key under your account page, free accounts are not provided with an API key, but public endpoints can still be accessed.</p>
+<h1 id='charities'>Charities</h1><h2 id='get-a-specific-charity'>Get a Specific Charity</h2><pre class="highlight shell">curl <span class="s2">"https://app.justcharity.org/api/v1/charities/&lt;SLUG&gt;"</span>
 </pre>
-<pre class="highlight python"><span class="kn">import</span> <span class="s">'kittn'</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">Kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cancer Research UK"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">447</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cancer-research-uk"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"short_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cancer Research UK"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"engagement_in_period"</span><span class="p">:</span><span class="w"> </span><span class="mi">565</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"reach_in_period"</span><span class="p">:</span><span class="w"> </span><span class="mi">1098478</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"page_activity_in_period"</span><span class="p">:</span><span class="w"> </span><span class="mi">259859</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"page_activity_in_period_percentile"</span><span class="p">:</span><span class="w"> </span><span class="mf">99.97</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"reach_in_period_percentile"</span><span class="p">:</span><span class="w"> </span><span class="mf">99.35</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"engagement_in_period_percentile"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves a specific charity.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET https://app.justcharity.org/api/v1/charities/&lt;SLUG&gt;</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>SLUG</td>
+<td>The SLUG of the charity to retrieve</td>
+</tr>
+</tbody></table>
+<h2 id='social-overview'>Social overview</h2><pre class="highlight shell">curl <span class="s2">"https://app.justcharity.org/api/v1/charities/&lt;SLUG&gt;/social"</span>
 </pre>
-<pre class="highlight shell">curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"this_week"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"engaged"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">151</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"human_count"</span><span class="p">:</span><span class="w"> </span><span class="s2">"151"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+          </span><span class="mi">1466467200000</span><span class="p">,</span><span class="w">
+          </span><span class="mi">26</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+          </span><span class="mi">1466553600000</span><span class="p">,</span><span class="w">
+          </span><span class="mi">10</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="err">.......</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"reach"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">282828</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"human_count"</span><span class="p">:</span><span class="w"> </span><span class="s2">"283K"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+          </span><span class="mi">1466467200000</span><span class="p">,</span><span class="w">
+          </span><span class="mi">41893</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+          </span><span class="mi">1466553600000</span><span class="p">,</span><span class="w">
+          </span><span class="mi">19042</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="err">.......</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"last_week"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"engaged"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">214</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"human_count"</span><span class="p">:</span><span class="w"> </span><span class="s2">"214"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+          </span><span class="mi">1466467200000</span><span class="p">,</span><span class="w">
+          </span><span class="mi">31</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+          </span><span class="mi">1466553600000</span><span class="p">,</span><span class="w">
+          </span><span class="mi">28</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="err">.......</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"reach"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">290874</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"human_count"</span><span class="p">:</span><span class="w"> </span><span class="s2">"291K"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+          </span><span class="mi">1466467200000</span><span class="p">,</span><span class="w">
+          </span><span class="mi">73014</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+          </span><span class="mi">1466553600000</span><span class="p">,</span><span class="w">
+          </span><span class="mi">45419</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+          </span><span class="mi">1466640000000</span><span class="p">,</span><span class="w">
+          </span><span class="mi">42021</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="err">.......</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"engaged_change"</span><span class="p">:</span><span class="w"> </span><span class="mi">-30</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"reach_change"</span><span class="p">:</span><span class="w"> </span><span class="mf">-2.8</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves social engagement and reach metrics, for the current and last week.
+Engagement details the number of active users on public social media sources engaging with peer to peer fundraising for the specific charity.</p>
+
+<p>This data is used to render the social activity charts:
+<img src='/images/social.png' /></p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET https://app.justcharity.org/api/v1/charities/&lt;SLUG&gt;/social</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>SLUG</td>
+<td>The SLUG of the charity to retrieve</td>
+</tr>
+</tbody></table>
+<h2 id='engaged-pages'>Engaged pages</h2><pre class="highlight shell">curl <span class="s2">"https://app.justcharity.org/api/v1/charities/&lt;SLUG&gt;/pages"</span>
+</pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"chart_data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="err">....</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">69</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"page"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Panini Cheapskates: Donate Now!"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"owner_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Alex Pratchett, sian pratchett"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6806897</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"provider_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://...."</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"first_donation_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-26T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"last_donation_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-26T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"charity_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">447</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"event_id"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"total_raised"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"fractional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"128350.0"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gbp"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"priority"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"iso_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBP"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"British Pound"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"\u00a3"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"alternate_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"subunit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Penny"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"subunit_to_unit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"symbol_first"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"html_entity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&amp;#x00A3;"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"decimal_mark"</span><span class="p">:</span><span class="w"> </span><span class="s2">"."</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"thousands_separator"</span><span class="p">:</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"iso_numeric"</span><span class="p">:</span><span class="w"> </span><span class="s2">"826"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"raised_human"</span><span class="p">:</span><span class="w"> </span><span class="s2">"\u00a31,283.50"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"short_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Panini Cheapskates: Donate Now!"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"page_trend_data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">4</span><span class="p">,</span><span class="w">
+        </span><span class="mi">18</span><span class="p">,</span><span class="w">
+        </span><span class="mi">2</span><span class="p">,</span><span class="w">
+        </span><span class="mi">4</span><span class="p">,</span><span class="w">
+        </span><span class="mi">7</span><span class="p">,</span><span class="w">
+        </span><span class="mi">2</span><span class="p">,</span><span class="w">
+        </span><span class="mi">4</span><span class="p">,</span><span class="w">
+        </span><span class="mi">5</span><span class="p">,</span><span class="w">
+        </span><span class="mi">4</span><span class="p">,</span><span class="w">
+        </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="mi">21</span><span class="p">,</span><span class="w">
+        </span><span class="mi">5</span><span class="p">,</span><span class="w">
+        </span><span class="mi">8</span><span class="p">,</span><span class="w">
+        </span><span class="mi">11</span><span class="p">,</span><span class="w">
+        </span><span class="mi">1</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"page"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dawn-to-Dusk 2016's fundraising page"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"owner_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Phil Girling, Adam Keenor, Elliott Hooper-Nash, Simon Burns, Max Ireland, John Hall, Bethan Keeble, Richard Frederick, Alex Sprague, Gareth Jones, Roger Cutts, Matthew Hardy, Jason Lewis, Oliver Fitzgerald-Lombard, Tim Thorpe,"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">6758017</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"provider_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://...."</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"first_donation_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-20T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"last_donation_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-20T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"charity_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">447</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"event_id"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"total_raised"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"fractional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"180600.0"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gbp"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"priority"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"iso_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBP"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"British Pound"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"\u00a3"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"alternate_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"subunit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Penny"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"subunit_to_unit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"symbol_first"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"html_entity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&amp;#x00A3;"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"decimal_mark"</span><span class="p">:</span><span class="w"> </span><span class="s2">"."</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"thousands_separator"</span><span class="p">:</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"iso_numeric"</span><span class="p">:</span><span class="w"> </span><span class="s2">"826"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"raised_human"</span><span class="p">:</span><span class="w"> </span><span class="s2">"\u00a31,806.00"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"short_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dawn-to-Dusk 2016&amp;#39;s fundraising ..."</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"page_trend_data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">7</span><span class="p">,</span><span class="w">
+        </span><span class="mi">8</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="err">......</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves a list of recently socially active pages for the specific charity.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET https://app.justcharity.org/api/v1/charities/&lt;SLUG&gt;/pages</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>SLUG</td>
+<td>The SLUG of the charity to retrieve</td>
+</tr>
+</tbody></table>
+<h2 id='engaged-events'>Engaged events</h2><pre class="highlight shell">curl <span class="s2">"https://app.justcharity.org/api/v1/charities/&lt;SLUG&gt;/events"</span>
+</pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"chart_data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Guildford 5K 2016 11:00"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1226300</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"guildford-5k-2016-11-00"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"start_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-26T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"short_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Guildford 5K 2016 11:00"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"total_raised"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"fractional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2816936.0"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gbp"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"priority"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"iso_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBP"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"British Pound"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"\u00a3"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"alternate_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"subunit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Penny"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"subunit_to_unit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"symbol_first"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"html_entity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&amp;#x00A3;"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"decimal_mark"</span><span class="p">:</span><span class="w"> </span><span class="s2">"."</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"thousands_separator"</span><span class="p">:</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"iso_numeric"</span><span class="p">:</span><span class="w"> </span><span class="s2">"826"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="s2">"bank"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"rounding_method"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"rates"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"mutex"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"total_raised_offline"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"fractional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"34000.0"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gbp"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"priority"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"iso_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBP"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"British Pound"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"\u00a3"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"alternate_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"subunit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Penny"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"subunit_to_unit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"symbol_first"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"html_entity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&amp;#x00A3;"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"decimal_mark"</span><span class="p">:</span><span class="w"> </span><span class="s2">"."</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"thousands_separator"</span><span class="p">:</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"iso_numeric"</span><span class="p">:</span><span class="w"> </span><span class="s2">"826"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="s2">"bank"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"rounding_method"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"rates"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"mutex"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"total_raised_online"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"fractional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2763036.0"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gbp"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"priority"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"iso_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBP"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"British Pound"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"\u00a3"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"alternate_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"subunit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Penny"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"subunit_to_unit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"symbol_first"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"html_entity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&amp;#x00A3;"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"decimal_mark"</span><span class="p">:</span><span class="w"> </span><span class="s2">"."</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"thousands_separator"</span><span class="p">:</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"iso_numeric"</span><span class="p">:</span><span class="w"> </span><span class="s2">"826"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="s2">"bank"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"rounding_method"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"rates"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"mutex"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"engagement_in_period"</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"reach_in_period"</span><span class="p">:</span><span class="w"> </span><span class="mi">22413</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"page_activity_in_period"</span><span class="p">:</span><span class="w"> </span><span class="mi">207</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"page_activity_in_period_percentile"</span><span class="p">:</span><span class="w"> </span><span class="mf">99.66</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"reach_in_period_percentile"</span><span class="p">:</span><span class="w"> </span><span class="mf">89.78</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"engagement_in_period_percentile"</span><span class="p">:</span><span class="w"> </span><span class="mf">93.15</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"event_trend_data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">3</span><span class="p">,</span><span class="w">
+        </span><span class="mi">8</span><span class="p">,</span><span class="w">
+        </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="mi">1</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bradford 5K 2016 10:30"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1066907</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bradford-5k-2016-10-30"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"start_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-11T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"short_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bradford 5K 2016 10:30"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"total_raised"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"fractional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3264527.0"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gbp"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"priority"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"iso_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBP"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"British Pound"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"\u00a3"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"alternate_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"subunit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Penny"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"subunit_to_unit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"symbol_first"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"html_entity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&amp;#x00A3;"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"decimal_mark"</span><span class="p">:</span><span class="w"> </span><span class="s2">"."</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"thousands_separator"</span><span class="p">:</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"iso_numeric"</span><span class="p">:</span><span class="w"> </span><span class="s2">"826"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="s2">"bank"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"rounding_method"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"rates"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"mutex"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"total_raised_offline"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"fractional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"164400.0"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gbp"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"priority"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"iso_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBP"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"British Pound"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"\u00a3"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"alternate_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"subunit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Penny"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"subunit_to_unit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"symbol_first"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"html_entity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&amp;#x00A3;"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"decimal_mark"</span><span class="p">:</span><span class="w"> </span><span class="s2">"."</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"thousands_separator"</span><span class="p">:</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"iso_numeric"</span><span class="p">:</span><span class="w"> </span><span class="s2">"826"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="s2">"bank"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"rounding_method"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"rates"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"mutex"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"total_raised_online"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"fractional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3073327.0"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gbp"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"priority"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"iso_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBP"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"British Pound"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"\u00a3"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"alternate_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"subunit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Penny"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"subunit_to_unit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"symbol_first"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"html_entity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&amp;#x00A3;"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"decimal_mark"</span><span class="p">:</span><span class="w"> </span><span class="s2">"."</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"thousands_separator"</span><span class="p">:</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"iso_numeric"</span><span class="p">:</span><span class="w"> </span><span class="s2">"826"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="s2">"bank"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"rounding_method"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"rates"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"mutex"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"engagement_in_period"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"reach_in_period"</span><span class="p">:</span><span class="w"> </span><span class="mi">29058</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"page_activity_in_period"</span><span class="p">:</span><span class="w"> </span><span class="mi">433</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"page_activity_in_period_percentile"</span><span class="p">:</span><span class="w"> </span><span class="mf">99.9</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"reach_in_period_percentile"</span><span class="p">:</span><span class="w"> </span><span class="mf">91.23</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"engagement_in_period_percentile"</span><span class="p">:</span><span class="w"> </span><span class="mf">91.55</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"event_trend_data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="mi">10</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="err">....</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves a list of recently socially active events for the specific charity.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET https://app.justcharity.org/api/v1/charities/&lt;SLUG&gt;/events</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>SLUG</td>
+<td>The SLUG of the charity to retrieve</td>
+</tr>
+</tbody></table>
+<h2 id='page-widget'>Page Widget</h2><pre class="highlight shell">curl <span class="s2">"https://app.justcharity.org/api/v1/charities/&lt;SLUG&gt;/widgets/page.json?api_key=&lt;KEY&gt;"</span>
 </pre>
 
 <blockquote>
@@ -101,80 +573,243 @@ You must replace <code class="prettyprint">meowmeowmeow</code> with your persona
 </blockquote>
 <pre class="highlight json"><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Walk for Life as quick as I can!"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"owner_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Donna Jones"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"clean_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.raceforlifesponsorme.org/DonnaWynneJones"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"first_donation_at"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"last_donation_at"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"charity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cancer Research UK"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cardiff"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"total_raised_cents"</span><span class="p">:</span><span class="w"> </span><span class="mi">2000</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"raised_human"</span><span class="p">:</span><span class="w"> </span><span class="s2">"£20.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"donation_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"image_url"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isis"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Louise Bromley's Fundraising Page"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"owner_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Louise Bromley"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"clean_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.raceforlifesponsorme.org/LOUISEBROMLEY"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"first_donation_at"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"last_donation_at"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"charity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cancer Research UK"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Basingstoke"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"total_raised_cents"</span><span class="p">:</span><span class="w"> </span><span class="mi">1500</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"raised_human"</span><span class="p">:</span><span class="w"> </span><span class="s2">"£15.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"donation_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"image_url"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sponsor me!!"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"owner_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Olivia Forster"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"clean_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.raceforlifesponsorme.org/OliviaForster"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"first_donation_at"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"last_donation_at"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"charity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cancer Research UK"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Leeds (Temple Newsam)"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"total_raised_cents"</span><span class="p">:</span><span class="w"> </span><span class="mi">5000</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"raised_human"</span><span class="p">:</span><span class="w"> </span><span class="s2">"£50.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"donation_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"image_url"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="err">.......</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></pre>
 
-<p>This endpoint retrieves all kittens.</p>
-<h3 id='http-request'>HTTP Request</h1>
-<p><code class="prettyprint">GET http://example.com/kittens</code></p>
-<h3 id='query-parameters'>Query Parameters</h1>
+<p>This endpoint retrieves a list of recent pages for a charity.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET https://app.justcharity.org/api/v1/charities/&lt;SLUG&gt;/widgets/page.json?api_key=&lt;KEY&gt;</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
-<th>Default</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
-</tr>
-<tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>SLUG</td>
+<td>The SLUG of the charity to retrieve</td>
 </tr>
 </tbody></table>
-
-<p><aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside></p>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h1><pre class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<h2 id='social-widget'>Social Widget</h2><pre class="highlight shell">curl <span class="s2">"https://app.justcharity.org/api/v1/charities/&lt;SLUG&gt;/widgets/social.json?api_key=&lt;KEY&gt;"</span>
 </pre>
-<pre class="highlight python"><span class="kn">import</span> <span class="s">'kittn'</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">Kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</pre>
-<pre class="highlight shell">curl <span class="s2">"http://example.com/api/kittens/3"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"photo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://pbs.twimg.com/profile_images/490984326830772225/WTEvX65N_400x400.jpeg"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://twitter.com/jemmataylor1989"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jemma"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"page"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Luke's Family's fundraising page"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"owner_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Katrina Francis, Ian Francis, Jemma Taylor, Christopher Taylor, barbara Fuge, Jasmin Eames, Sophie Procter"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"clean_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://uk.virginmoneygiving.com/fundraiser-web/fundraiser/showFundraiserProfilePage.action?userUrl=IanKatrinaFrancis&amp;isTeam=true"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"first_donation_at"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"last_donation_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-18T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"charity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cardiac Risk in the Young"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CRY Heart of London Bridges Walk"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"total_raised_cents"</span><span class="p">:</span><span class="w"> </span><span class="mi">72500</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"raised_human"</span><span class="p">:</span><span class="w"> </span><span class="s2">"£725.00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"donation_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">44</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"image_url"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+  </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"photo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://pbs.twimg.com/profile_images/637592970733166593/gxbF5qv2_400x400.jpg"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://twitter.com/ryanbingbong"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ryan Newman"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"page"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Letcombe Two's fundraising page"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"owner_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tom Sutherland"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"clean_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://uk.virginmoneygiving.com/fundraiser-web/fundraiser/showFundraiserPage.action?userUrl=TomSutherland&amp;pageUrl=3"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"first_donation_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-01T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"last_donation_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-26T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"charity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cardiac Risk in the Young"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CRY Heart of London Bridges Walk"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"total_raised_cents"</span><span class="p">:</span><span class="w"> </span><span class="mi">19150</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"raised_human"</span><span class="p">:</span><span class="w"> </span><span class="s2">"£191.50"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"donation_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"image_url"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+  </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"photo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://pbs.twimg.com/profile_images/2678102757/524d2b468f696f667b94aa76b3487338_400x400.jpeg"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://twitter.com/tas9173"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tom Sutherland"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"page"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Letcombe Two's fundraising page"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"owner_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tom Sutherland"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"clean_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://uk.virginmoneygiving.com/fundraiser-web/fundraiser/showFundraiserPage.action?userUrl=TomSutherland&amp;pageUrl=3"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"first_donation_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-01T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"last_donation_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-26T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"charity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cardiac Risk in the Young"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CRY Heart of London Bridges Walk"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"total_raised_cents"</span><span class="p">:</span><span class="w"> </span><span class="mi">19150</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"raised_human"</span><span class="p">:</span><span class="w"> </span><span class="s2">"£191.50"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"donation_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"image_url"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="err">.......</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves a list of social activity for pages for a charity.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET https://app.justcharity.org/api/v1/charities/&lt;SLUG&gt;/widgets/social.json?api_key=&lt;KEY&gt;</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>SLUG</td>
+<td>The SLUG of the charity to retrieve</td>
+</tr>
+</tbody></table>
+<h1 id='events'>Events</h1><h2 id='get-a-specific-event'>Get a Specific Event</h2><pre class="highlight shell">curl <span class="s2">"https://app.justcharity.org/api/v1/events/dryathlon-2015"</span>
 </pre>
 
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
 <pre class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isis"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dryathlon 2015"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">829692</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"slug"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dryathlon-2015"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"start_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-31T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"short_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dryathlon 2015"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"total_raised"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"fractional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"388053056.0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gbp"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"priority"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"iso_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBP"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"British Pound"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"£"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"alternate_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="s2">"subunit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Penny"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"subunit_to_unit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol_first"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"html_entity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&amp;#x00A3;"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"decimal_mark"</span><span class="p">:</span><span class="w"> </span><span class="s2">"."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"thousands_separator"</span><span class="p">:</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"iso_numeric"</span><span class="p">:</span><span class="w"> </span><span class="s2">"826"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"bank"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"rounding_method"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"rates"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+      </span><span class="s2">"mutex"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"total_raised_offline"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"fractional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"18856792.0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gbp"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"priority"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"iso_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBP"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"British Pound"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"£"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"alternate_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="s2">"subunit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Penny"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"subunit_to_unit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol_first"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"html_entity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&amp;#x00A3;"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"decimal_mark"</span><span class="p">:</span><span class="w"> </span><span class="s2">"."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"thousands_separator"</span><span class="p">:</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"iso_numeric"</span><span class="p">:</span><span class="w"> </span><span class="s2">"826"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"bank"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"rounding_method"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"rates"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+      </span><span class="s2">"mutex"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"total_raised_online"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"fractional"</span><span class="p">:</span><span class="w"> </span><span class="s2">"357612864.0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gbp"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"priority"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"iso_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBP"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"British Pound"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"£"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"alternate_symbols"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="s2">"subunit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Penny"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"subunit_to_unit"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"symbol_first"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"html_entity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&amp;#x00A3;"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"decimal_mark"</span><span class="p">:</span><span class="w"> </span><span class="s2">"."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"thousands_separator"</span><span class="p">:</span><span class="w"> </span><span class="s2">","</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"iso_numeric"</span><span class="p">:</span><span class="w"> </span><span class="s2">"826"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"bank"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"rounding_method"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"rates"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+      </span><span class="s2">"mutex"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"engagement_in_period"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"reach_in_period"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"page_activity_in_period"</span><span class="p">:</span><span class="w"> </span><span class="mi">28</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"page_activity_in_period_percentile"</span><span class="p">:</span><span class="w"> </span><span class="mf">97.75</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"reach_in_period_percentile"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"engagement_in_period_percentile"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
 
-<p>This endpoint retrieves a specific kitten.</p>
-
-<p><aside class="warning">If you&rsquo;re not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside></p>
-<h3 id='http-request'>HTTP Request</h1>
-<p><code class="prettyprint">GET http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters'>URL Parameters</h1>
+<p>This endpoint retrieves a specific event.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET https://app.justcharity.org/api/v1/events/&lt;SLUG&gt;</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -182,15 +817,13 @@ Remember — a happy kitten is an authenticated kitten!
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the cat to retrieve</td>
+<td>SLUG</td>
+<td>The SLUG of the event to retrieve</td>
 </tr>
 </tbody></table>
 
           <h1 id='errors'>Errors</h1>
-<p><aside class="notice">This error section is stored in a separate file in <code class="prettyprint">includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the <code class="prettyprint">includes</code> folder and add them to the top of your <code class="prettyprint">index.md</code>&rsquo;s frontmatter. Files are included in the order listed.</aside></p>
-
-<p>The Kittn API uses the following error codes:</p>
+<p>The JustCharity API uses the following error codes:</p>
 
 <table><thead>
 <tr>
@@ -208,15 +841,15 @@ Remember — a happy kitten is an authenticated kitten!
 </tr>
 <tr>
 <td>403</td>
-<td>Forbidden &ndash; The kitten requested is hidden for administrators only</td>
+<td>Forbidden &ndash; The object requested is hidden for authenticated users only</td>
 </tr>
 <tr>
 <td>404</td>
-<td>Not Found &ndash; The specified kitten could not be found</td>
+<td>Not Found &ndash; The specified object could not be found</td>
 </tr>
 <tr>
 <td>405</td>
-<td>Method Not Allowed &ndash; You tried to access a kitten with an invalid method</td>
+<td>Method Not Allowed &ndash; You tried to access a object with an invalid method</td>
 </tr>
 <tr>
 <td>406</td>
@@ -224,15 +857,11 @@ Remember — a happy kitten is an authenticated kitten!
 </tr>
 <tr>
 <td>410</td>
-<td>Gone &ndash; The kitten requested has been removed from our servers</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&rsquo;m a teapot</td>
+<td>Gone &ndash; The object requested has been removed from our servers</td>
 </tr>
 <tr>
 <td>429</td>
-<td>Too Many Requests &ndash; You&rsquo;re requesting too many kittens! Slown down!</td>
+<td>Too Many Requests &ndash; You&rsquo;re requesting too many objects! Slown down!</td>
 </tr>
 <tr>
 <td>500</td>
@@ -248,8 +877,6 @@ Remember — a happy kitten is an authenticated kitten!
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
           </div>
       </div>
     </div>
