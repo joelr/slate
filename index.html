@@ -47,7 +47,9 @@
 <p>Welcome to the JustCharity API. You can use our API to access JustCharity API endpoints, which can get information on various events, charities, and analytics within the platform.</p>
 
 <p>Some endpoints are authenticated with an API key, public API endpoints and authenticated endpoints are both documented here.</p>
-<h1 id='authentication'>Authentication</h1>
+
+<p>This API is currently in Beta. Changes may be made at any time, although we aim to avoid breaking changes. If you have any specific integration requirements or use cases and need to confirm implementation details, or have any other enquiries please <a href="https://app.justcharity.org/pages/contact">Contact us</a>.</p>
+<h1 id='api-overview'>API Overview</h1><h2 id='authentication'>Authentication</h2>
 <blockquote>
 <p>To authorize, use this code:</p>
 </blockquote>
@@ -59,9 +61,15 @@ curl <span class="s2">"https://app.justcharity.org/api/v1/charities/cancer-resea
 <p>Make sure to replace <code class="prettyprint">&lt;KEY&gt;</code> with your API key.</p>
 </blockquote>
 
+<p>Some endpoints require authentication, although most endpoints are public.</p>
+
 <p>You can register a new JustCharity API key at <a href="https://app.justcharity.org/pricing">JustCharity</a>.</p>
 
 <p>Once you have created an account, you can find the API key under your account page, free accounts are not provided with an API key, but public endpoints can still be accessed.</p>
+<h2 id='rate-limiting'>Rate limiting</h2>
+<p>Some endpoints are rate-limited, please ensure any integrations can handle a 429 status code, where possible please implement caching.</p>
+<h2 id='format'>Format</h2>
+<p>All request/responses are in JSON. However, JSON(P) is also supported for legacy ajax/jquery support.</p>
 <h1 id='charities'>Charities</h1><h2 id='get-a-specific-charity'>Get a Specific Charity</h2><pre class="highlight shell">curl <span class="s2">"https://app.justcharity.org/api/v1/charities/&lt;SLUG&gt;"</span>
 </pre>
 
@@ -184,6 +192,46 @@ Engagement details the number of active users on public social media sources eng
 <img src='/images/social.png' /></p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://app.justcharity.org/api/v1/charities/&lt;SLUG&gt;/social</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>SLUG</td>
+<td>The SLUG of the charity to retrieve</td>
+</tr>
+</tbody></table>
+<h2 id='hashtags'>Hashtags</h2><pre class="highlight shell">curl <span class="s2">"https://app.justcharity.org/api/v1/charities/&lt;SLUG&gt;/hash_tags"</span>
+</pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"hash_tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"c"</span><span class="p">:</span><span class="w"> </span><span class="mi">21969</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sponsorme"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"c"</span><span class="p">:</span><span class="w"> </span><span class="mi">9381</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fundraising"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"c"</span><span class="p">:</span><span class="w"> </span><span class="mi">8394</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"justsponsored"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="err">....</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves hash tag metrics/mentions for a specific charity.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET https://app.justcharity.org/api/v1/charities/&lt;SLUG&gt;/hash_tags</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -809,6 +857,46 @@ Engagement details the number of active users on public social media sources eng
 <p>This endpoint retrieves a specific event.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://app.justcharity.org/api/v1/events/&lt;SLUG&gt;</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>SLUG</td>
+<td>The SLUG of the event to retrieve</td>
+</tr>
+</tbody></table>
+<h2 id='hashtags'>Hashtags</h2><pre class="highlight shell">curl <span class="s2">"https://app.justcharity.org/api/v1/events/&lt;SLUG&gt;/hash_tags"</span>
+</pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"hash_tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"c"</span><span class="p">:</span><span class="w"> </span><span class="mi">21969</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sponsorme"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"c"</span><span class="p">:</span><span class="w"> </span><span class="mi">9381</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fundraising"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"c"</span><span class="p">:</span><span class="w"> </span><span class="mi">8394</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"justsponsored"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="err">....</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>This endpoint retrieves hash tag metrics/mentions for a specific event.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET https://app.justcharity.org/api/v1/event/&lt;SLUG&gt;/hash_tags</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
