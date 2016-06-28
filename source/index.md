@@ -19,7 +19,11 @@ Welcome to the JustCharity API. You can use our API to access JustCharity API en
 
 Some endpoints are authenticated with an API key, public API endpoints and authenticated endpoints are both documented here.
 
-# Authentication
+This API is currently in Beta. Changes may be made at any time, although we aim to avoid breaking changes. If you have any specific integration requirements or use cases and need to confirm implementation details, or have any other enquiries please [Contact us](https://app.justcharity.org/pages/contact).
+
+# API Overview
+
+## Authentication
 
 > To authorize, use this code:
 
@@ -30,9 +34,20 @@ curl "https://app.justcharity.org/api/v1/charities/cancer-research-uk/widgets/pa
 
 > Make sure to replace `<KEY>` with your API key.
 
+Some endpoints require authentication, although most endpoints are public.
+
 You can register a new JustCharity API key at [JustCharity](https://app.justcharity.org/pricing).
 
 Once you have created an account, you can find the API key under your account page, free accounts are not provided with an API key, but public endpoints can still be accessed.
+
+## Rate limiting
+
+Some endpoints are rate-limited, please ensure any integrations can handle a 429 status code, where possible please implement caching.
+
+## Format
+
+All request/responses are in JSON. However, JSON(P) is also supported for legacy ajax/jquery support.
+
 
 # Charities
 
@@ -164,6 +179,48 @@ This data is used to render the social activity charts:
 ### HTTP Request
 
 `GET https://app.justcharity.org/api/v1/charities/<SLUG>/social`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+SLUG | The SLUG of the charity to retrieve
+
+
+
+## Hashtags
+
+```shell
+curl "https://app.justcharity.org/api/v1/charities/<SLUG>/hash_tags"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "hash_tags": [
+    {
+      "c": 21969,
+      "name": "sponsorme"
+    },
+    {
+      "c": 9381,
+      "name": "fundraising"
+    },
+    {
+      "c": 8394,
+      "name": "justsponsored"
+    },
+    ....
+  ]
+}
+```
+
+This endpoint retrieves hash tag metrics/mentions for a specific charity.
+
+### HTTP Request
+
+`GET https://app.justcharity.org/api/v1/charities/<SLUG>/hash_tags`
 
 ### URL Parameters
 
@@ -804,3 +861,45 @@ This endpoint retrieves a specific event.
 Parameter | Description
 --------- | -----------
 SLUG | The SLUG of the event to retrieve
+
+
+## Hashtags
+
+```shell
+curl "https://app.justcharity.org/api/v1/events/<SLUG>/hash_tags"
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "hash_tags": [
+    {
+      "c": 21969,
+      "name": "sponsorme"
+    },
+    {
+      "c": 9381,
+      "name": "fundraising"
+    },
+    {
+      "c": 8394,
+      "name": "justsponsored"
+    },
+    ....
+  ]
+}
+```
+
+This endpoint retrieves hash tag metrics/mentions for a specific event.
+
+### HTTP Request
+
+`GET https://app.justcharity.org/api/v1/event/<SLUG>/hash_tags`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+SLUG | The SLUG of the event to retrieve
+
